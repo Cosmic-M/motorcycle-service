@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "moto_services")
-public class MotoService {
+@Table(name = "favors")
+public class Favor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,5 +18,6 @@ public class MotoService {
     @ManyToOne
     private Master master;
     private BigDecimal totalCost;
+    @Enumerated(EnumType.STRING)
     private PayStatus status;
 }

@@ -16,6 +16,6 @@ public class Owner {
     private Long id;
     @OneToMany
     private List<Motorcycle> motorcycles;
-    @OneToMany
+    @OneToMany(mappedBy = "owner")
     private List<Order> orders;
 }

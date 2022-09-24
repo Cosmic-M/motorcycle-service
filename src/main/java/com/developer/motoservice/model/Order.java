@@ -16,14 +16,18 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private Owner owner;
     @OneToOne
     private Motorcycle motorcycle;
     private String description;
     private LocalDateTime openOrder;
     @OneToMany
-    private List<MotoService> motoServices;
+    private List<Favor> motoServices;
     @OneToMany
     private List<MotoPart> motoParts;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private BigDecimal totalAmount;
     private LocalDateTime completionOrder;

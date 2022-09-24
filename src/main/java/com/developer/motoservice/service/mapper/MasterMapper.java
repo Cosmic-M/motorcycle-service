@@ -4,6 +4,7 @@ import com.developer.motoservice.dto.request.MasterRequestDto;
 import com.developer.motoservice.dto.response.MasterResponseDto;
 import com.developer.motoservice.model.Master;
 import com.developer.motoservice.model.Order;
+import com.developer.motoservice.repository.OrderRepository;
 import com.developer.motoservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class MasterMapper {
-    private final OrderService orderService;
+    private final OrderRepository orderRepository;
 
     public MasterResponseDto toDto(Master master) {
         MasterResponseDto masterResponseDto = new MasterResponseDto();
@@ -31,7 +32,9 @@ public class MasterMapper {
         master.setFirstName(masterRequestDto.getFirstName());
         master.setLastName(masterRequestDto.getLastName());
         master.setOrders(masterRequestDto.getOrderIdList().stream()
-                .map(orderService::get)
+                .map(id -> orderRepository.findById(id).orElseThrow(
+                        () -> new RuntimeException("Cannot find order by id=" + id)
+                ))
                 .collect(Collectors.toList()));
         return master;
     }

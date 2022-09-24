@@ -17,6 +17,9 @@ public class MotoPartMapper {
 
     public MotoPart toModel(MotoPartRequestDto requestDto) {
         MotoPart motoPart = new MotoPart();
+        if (requestDto.getId() != null) {
+            motoPart.setId(requestDto.getId());
+        }
         motoPart.setTitle(requestDto.getTitle());
         motoPart.setCost(requestDto.getCost());
         return motoPart;

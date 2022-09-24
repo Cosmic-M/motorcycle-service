@@ -15,4 +15,9 @@ public class MotoPartImpl implements MotoPartService {
     public MotoPart create(MotoPart motoPart) {
         return motoPartRepository.save(motoPart);
     }
+
+    @Override
+    public void update(MotoPart motoPart) {
+        motoPartRepository.save(motoPart);
+    }
 }
