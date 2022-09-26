@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS favors
     id bigint NOT NULL,
     order_id bigint NOT NULL,
     master_id bigint NOT NULL,
-    total_cost decimal(14, 5) NOT NULL,
+    cost decimal(14, 5) NOT NULL,
     status character varying(256) NOT NULL,
     CONSTRAINT vafor_pk PRIMARY KEY (id)
     CONSTRAINT `favor_order_fk`

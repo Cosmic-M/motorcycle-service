@@ -19,16 +19,24 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
+    @ManyToOne
+    @JoinColumn(name = "master_id", nullable = false)
+    private Master master;
     @OneToOne
     private Motorcycle motorcycle;
     private String description;
+    @Column(name = "open_order")
     private LocalDateTime openOrder;
     @OneToMany
-    private List<Favor> motoServices;
+    @Column(name = "favor_id")
+    private List<Favor> favors;
     @OneToMany
+    @Column(name = "moto_part_id")
     private List<MotoPart> motoParts;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+    @Column(name = "total_amount")
     private BigDecimal totalAmount;
+    @Column(name = "completion_order")
     private LocalDateTime completionOrder;
 }

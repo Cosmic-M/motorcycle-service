@@ -23,10 +23,11 @@ public class FavorServiceImpl implements FavorService {
     }
 
     @Override
-    public void changeStatus(Long favorId, PayStatus status) {
+    public void changeStatus(Long favorId, String status) {
         Favor favor = favorRepository.findById(favorId).orElseThrow(
                 () -> new RuntimeException("Cannot find favor by id=" + favorId));
-        favor.setStatus(status);
+        PayStatus payStatus = PayStatus.valueOf(status);
+        favor.setStatus(payStatus);
         update(favor);
     }
 }

@@ -2,7 +2,6 @@ package com.developer.motoservice.model;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Getter
@@ -15,8 +14,10 @@ public class Motorcycle {
     private Long id;
     private String brand;
     private String model;
+    @Column(name = "production_year")
     private int productionYear;
     private String license;
     @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 }

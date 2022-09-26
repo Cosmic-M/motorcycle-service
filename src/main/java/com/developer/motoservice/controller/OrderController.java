@@ -5,6 +5,7 @@ import com.developer.motoservice.dto.request.OrderRequestDto;
 import com.developer.motoservice.dto.response.OrderResponseDto;
 import com.developer.motoservice.model.MotoPart;
 import com.developer.motoservice.model.Order;
+import com.developer.motoservice.model.OrderStatus;
 import com.developer.motoservice.service.OrderService;
 import com.developer.motoservice.service.mapper.MotoPartMapper;
 import com.developer.motoservice.service.mapper.OrderMapper;
@@ -27,10 +28,9 @@ public class OrderController {
     }
 
     @ApiOperation(value = "add moto part to order")
-    @PostMapping("/add-moto-part")
-    public OrderResponseDto addMotoPart(@RequestParam Long orderId, @RequestBody MotoPartRequestDto requestDto) {
-        MotoPart motoPart = motoPartMapper.toModel(requestDto);
-        Order fromDb = orderService.add(orderId, motoPart);
+    @PutMapping("/add-moto-part")
+    public OrderResponseDto addMotoPart(@RequestParam Long orderId, @RequestParam Long motoPartId) {
+        Order fromDb = orderService.add(orderId, motoPartId);
         return orderMapper.toDto(fromDb);
     }
 
@@ -43,12 +43,15 @@ public class OrderController {
     @ApiOperation(value = "change order status")
     @PostMapping("/change-status")
     public void changeStatus(@RequestParam Long orderId, @RequestParam String status) {
-        orderService.updateStatus(orderId, status);
+        orderService.changeStatus(orderId, status);
     }
 
     @ApiOperation(value = "calculate total amount of order")
     @GetMapping("/total-amount")
-    public OrderResponseDto calculateTotalAmount(@RequestBody Order order) {
-        return orderMapper.toDto(orderService.calculateTotalAmount(order));
+    public OrderResponseDto calculateTotalAmount(@RequestBody OrderRequestDto requestDto) {
+        Order order = orderMapper.toModel(requestDto);
+        order.setTotalAmount(orderService.getTotalAmount(order));
+        order.setStatus(OrderStatus.IN_PROCESS);
+        return orderMapper.toDto(order);
     }
 }

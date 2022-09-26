@@ -12,10 +12,11 @@ import java.util.List;
 public class OrderRequestDto {
     private Long id;
     private Long ownerId;
+    private Long masterId;
     private Long motorcycleId;
     private String description;
     private LocalDateTime openOrder;
-    private List<Long> motoServiceIdList;
+    private List<Long> favorIdList;
     private List<Long> motoPartIdList;
     private OrderStatus status;
     private BigDecimal totalAmount;

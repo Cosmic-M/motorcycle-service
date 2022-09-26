@@ -11,6 +11,6 @@ public class FavorRequestDto {
     private Long id;
     private Long orderId;
     private Long masterId;
-    private BigDecimal totalCost;
+    private BigDecimal cost;
     private PayStatus status;
 }

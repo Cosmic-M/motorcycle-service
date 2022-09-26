@@ -14,7 +14,7 @@ public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+    @OneToMany(mappedBy = "owner")
     private List<Motorcycle> motorcycles;
     @OneToMany(mappedBy = "owner")
     private List<Order> orders;

@@ -16,4 +16,6 @@ public class MotoPart {
     private Long id;
     private String title;
     private BigDecimal cost;
+    @ManyToOne
+    private Order order;
 }

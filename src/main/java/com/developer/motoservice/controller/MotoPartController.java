@@ -24,7 +24,7 @@ public class MotoPartController {
         return motoPartMapper.toDto(motoPartService.create(motoPartMapper.toModel(requestDto)));
     }
 
-    @ApiOperation(value = "fetch moto part to update data into DB")
+    @ApiOperation(value = "fetching existent moto part into DB for updating")
     @PostMapping("/update")
     public void update(@RequestBody MotoPartRequestDto requestDto) {
         motoPartService.update(motoPartMapper.toModel(requestDto));

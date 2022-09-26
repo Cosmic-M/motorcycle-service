@@ -20,7 +20,7 @@ public class FavorMapper {
         responseDto.setOrderId(favor.getMaster().getId());
         responseDto.setMasterId(favor.getOrder().getId());
         responseDto.setStatus(favor.getStatus());
-        responseDto.setTotalCost(favor.getTotalCost());
+        responseDto.setTotalCost(favor.getCost());
         return responseDto;
     }
 
@@ -34,7 +34,7 @@ public class FavorMapper {
         favor.setMaster(masterRepository.findById(requestDto.getMasterId()).orElseThrow(
                 () -> new RuntimeException("Cannot find master by id=" + requestDto.getMasterId())));
         favor.setStatus(requestDto.getStatus());
-        favor.setTotalCost(requestDto.getTotalCost());
+        favor.setCost(requestDto.getCost());
         return favor;
     }
 }

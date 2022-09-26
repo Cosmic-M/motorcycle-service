@@ -17,7 +17,7 @@ public class Favor {
     private Order order;
     @ManyToOne
     private Master master;
-    private BigDecimal totalCost;
+    private BigDecimal cost;
     @Enumerated(EnumType.STRING)
     private PayStatus status;
 }

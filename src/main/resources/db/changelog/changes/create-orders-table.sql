@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS orders
 (
     id bigint NOT NULL,
     owner_id bigint NOT NULL,
+    master_id bigint NOT NULL,
     motorcycle_id bigint NOT NULL,
     description character varying(256) NOT NULL,
     open_order timestamp NOT NULL,

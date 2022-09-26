@@ -1,16 +1,17 @@
 package com.developer.motoservice.service;
 
-import com.developer.motoservice.model.MotoPart;
 import com.developer.motoservice.model.Order;
+
+import java.math.BigDecimal;
 
 public interface OrderService {
     Order create(Order order);
 
-    Order add(Long id, MotoPart motoPart);
+    Order add(Long id, Long motoPartId);
 
     void update(Order order);
 
-    void updateStatus(Long orderId, String status);
+    void changeStatus(Long orderId, String status);
 
-    Order calculateTotalAmount(Order order);
+    BigDecimal getTotalAmount(Order order);
 }

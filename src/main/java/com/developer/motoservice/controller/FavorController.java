@@ -6,10 +6,7 @@ import com.developer.motoservice.service.FavorService;
 import com.developer.motoservice.service.mapper.FavorMapper;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,5 +19,17 @@ public class FavorController {
     @PostMapping("/create")
     public FavorResponseDto create(@RequestBody FavorRequestDto requestDto) {
         return favorMapper.toDto(favorService.create(favorMapper.toModel(requestDto)));
+    }
+
+    @ApiOperation(value = "fetching favor into DB to update date")
+    @PutMapping("/update")
+    public void update(@RequestBody FavorRequestDto requestDto) {
+        favorService.update(favorMapper.toModel(requestDto));
+    }
+
+    @ApiOperation(value = "Changing status of existent favor into DB")
+    @PutMapping("/change-status")
+    public void changeStatus(@RequestParam Long favorId, @RequestParam String status) {
+        favorService.changeStatus(favorId, status);
     }
 }
