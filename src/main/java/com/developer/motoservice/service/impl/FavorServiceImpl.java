@@ -14,11 +14,14 @@ public class FavorServiceImpl implements FavorService {
 
     @Override
     public Favor create(Favor favor) {
+        favor.setStatus(PayStatus.NOT_PAID);
         return favorRepository.save(favor);
     }
 
     @Override
     public void update(Favor favor) {
+        PayStatus statusFromDb = favorRepository.getPayStatusById(favor.getId());
+        favor.setStatus(statusFromDb);
         favorRepository.save(favor);
     }
 

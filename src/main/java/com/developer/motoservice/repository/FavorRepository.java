@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface FavorRepository extends JpaRepository<Favor, Long> {
     List<Favor> getAllByOrderInAndStatusIs(List<Order> orders, PayStatus status);
+
+    PayStatus getPayStatusById(Long favorId);
 }

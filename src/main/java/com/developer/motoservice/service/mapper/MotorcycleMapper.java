@@ -26,16 +26,16 @@ public class MotorcycleMapper {
     }
 
     public Motorcycle toModel(MotorcycleCreateRequestDto requestDto) {
-        return getGeneralFieldsMapped(requestDto);
+        return makeGeneralFieldsMapped(requestDto);
     }
 
     public Motorcycle toModel(MotorcycleUpdateRequestDto requestDto) {
-        Motorcycle motorcycle = getGeneralFieldsMapped(requestDto);
+        Motorcycle motorcycle = makeGeneralFieldsMapped(requestDto);
         motorcycle.setId(requestDto.getId());
         return motorcycle;
     }
 
-    private Motorcycle getGeneralFieldsMapped(MotorcycleCreateRequestDto requestDto) {
+    private Motorcycle makeGeneralFieldsMapped(MotorcycleCreateRequestDto requestDto) {
         Motorcycle motorcycle = new Motorcycle();
         motorcycle.setBrand(requestDto.getBrand());
         motorcycle.setModel(requestDto.getModel());

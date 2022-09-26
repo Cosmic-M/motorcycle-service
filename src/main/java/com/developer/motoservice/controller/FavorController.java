@@ -1,6 +1,7 @@
 package com.developer.motoservice.controller;
 
-import com.developer.motoservice.dto.request.FavorRequestDto;
+import com.developer.motoservice.dto.request.FavorCreateRequestDto;
+import com.developer.motoservice.dto.request.FavorUpdateRequestDto;
 import com.developer.motoservice.dto.response.FavorResponseDto;
 import com.developer.motoservice.service.FavorService;
 import com.developer.motoservice.service.mapper.FavorMapper;
@@ -15,15 +16,15 @@ public class FavorController {
     private final FavorService favorService;
     private final FavorMapper favorMapper;
 
-    @ApiOperation(value = "create new favor into DB")
+    @ApiOperation(value = "create new favor")
     @PostMapping("/create")
-    public FavorResponseDto create(@RequestBody FavorRequestDto requestDto) {
+    public FavorResponseDto create(@RequestBody FavorCreateRequestDto requestDto) {
         return favorMapper.toDto(favorService.create(favorMapper.toModel(requestDto)));
     }
 
-    @ApiOperation(value = "fetching favor into DB to update date")
+    @ApiOperation(value = "update existing favor")
     @PutMapping("/update")
-    public void update(@RequestBody FavorRequestDto requestDto) {
+    public void update(@RequestBody FavorUpdateRequestDto requestDto) {
         favorService.update(favorMapper.toModel(requestDto));
     }
 
