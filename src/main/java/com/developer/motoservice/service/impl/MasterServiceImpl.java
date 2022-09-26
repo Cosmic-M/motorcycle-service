@@ -26,6 +26,8 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public void update(Master master) {
+        List<Order> orders = orderRepository.getAllByMasterId(master.getId());
+        master.setOrders(orders);
         masterRepository.save(master);
     }
 
@@ -39,7 +41,7 @@ public class MasterServiceImpl implements MasterService {
         List<Order> orders = orderRepository
                 .getAllByMasterIdAndStatus(masterId, OrderStatus.CONFIRMED_SUCCESS);
         List<Favor> favors = favorRepository.getAllByOrderInAndStatusIs(orders, PayStatus.NOT_PAID);
-        BigDecimal totalFavorPay = favors.stream().map(Favor::getCost).reduce(BigDecimal::add).orElseThrow(
+        BigDecimal favorsMoney = favors.stream().map(Favor::getCost).reduce(BigDecimal::add).orElseThrow(
                 () -> new RuntimeException("Cannot find any relevant favor"
                 + " for master with id=" + masterId
                 + ": it seems to be master smoked bamboo last month"));
@@ -47,6 +49,6 @@ public class MasterServiceImpl implements MasterService {
         favorRepository.saveAll(favors);
         orders = orders.stream().peek(order -> order.setStatus(OrderStatus.PAID)).collect(Collectors.toList());
         orderRepository.saveAll(orders);
-        return totalFavorPay.multiply(BigDecimal.valueOf(0.4));
+        return favorsMoney.multiply(BigDecimal.valueOf(0.4));
     }
 }

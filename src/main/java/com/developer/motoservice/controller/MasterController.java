@@ -1,6 +1,7 @@
 package com.developer.motoservice.controller;
 
-import com.developer.motoservice.dto.request.MasterRequestDto;
+import com.developer.motoservice.dto.request.MasterCreateRequestDto;
+import com.developer.motoservice.dto.request.MasterUpdateRequestDto;
 import com.developer.motoservice.dto.response.MasterResponseDto;
 import com.developer.motoservice.dto.response.OrderResponseDto;
 import com.developer.motoservice.dto.response.SalaryResponseDto;
@@ -28,17 +29,17 @@ public class MasterController {
 
     @ApiOperation(value = "save new master into DB")
     @PostMapping("/create")
-    public MasterResponseDto create(@RequestBody MasterRequestDto masterRequestDto) {
+    public MasterResponseDto create(@RequestBody MasterCreateRequestDto masterRequestDto) {
         return masterMapper.toDto(masterService.create(masterMapper.toModel(masterRequestDto)));
     }
 
-    @ApiOperation(value = "fetching existent entity master into DB to update")
+    @ApiOperation(value = "update master`s data")
     @PutMapping("/update")
-    public void update(@RequestBody MasterRequestDto requestDto) {
+    public void update(@RequestBody MasterUpdateRequestDto requestDto) {
         masterService.update(masterMapper.toModel(requestDto));
     }
 
-    @ApiOperation(value = "fetching existent entity master into DB to update")
+    @ApiOperation(value = "get list of orders by masterId")
     @GetMapping("/order-list/{masterId}")
     public List<OrderResponseDto> getOrders(@PathVariable Long masterId) {
         List<Order> orders = masterService.getOrders(masterId);

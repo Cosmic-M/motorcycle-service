@@ -1,10 +1,10 @@
 package com.developer.motoservice.service.mapper;
 
-import com.developer.motoservice.dto.request.MasterRequestDto;
+import com.developer.motoservice.dto.request.MasterCreateRequestDto;
+import com.developer.motoservice.dto.request.MasterUpdateRequestDto;
 import com.developer.motoservice.dto.response.MasterResponseDto;
 import com.developer.motoservice.model.Master;
 import com.developer.motoservice.model.Order;
-import com.developer.motoservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class MasterMapper {
-    private final OrderRepository orderRepository;
 
     public MasterResponseDto toDto(Master master) {
         MasterResponseDto masterResponseDto = new MasterResponseDto();
@@ -26,15 +25,18 @@ public class MasterMapper {
         return masterResponseDto;
     }
 
-    public Master toModel(MasterRequestDto masterRequestDto) {
+    public Master toModel(MasterCreateRequestDto requestDto) {
         Master master = new Master();
-        master.setFirstName(masterRequestDto.getFirstName());
-        master.setLastName(masterRequestDto.getLastName());
-        master.setOrders(masterRequestDto.getOrderIdList().stream()
-                .map(id -> orderRepository.findById(id).orElseThrow(
-                        () -> new RuntimeException("Cannot find order by id=" + id)
-                ))
-                .collect(Collectors.toList()));
+        master.setFirstName(requestDto.getFirstName());
+        master.setLastName(requestDto.getLastName());
+        return master;
+    }
+
+    public Master toModel(MasterUpdateRequestDto requestDto) {
+        Master master = new Master();
+        master.setId(requestDto.getId());
+        master.setFirstName(requestDto.getFirstName());
+        master.setLastName(requestDto.getLastName());
         return master;
     }
 }
