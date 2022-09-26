@@ -14,7 +14,6 @@ public class Motorcycle {
     private Long id;
     private String brand;
     private String model;
-    @Column(name = "production_year")
     private int productionYear;
     private String license;
     @ManyToOne

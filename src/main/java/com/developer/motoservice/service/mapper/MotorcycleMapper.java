@@ -1,6 +1,7 @@
 package com.developer.motoservice.service.mapper;
 
-import com.developer.motoservice.dto.request.MotorcycleRequestDto;
+import com.developer.motoservice.dto.request.MotorcycleCreateRequestDto;
+import com.developer.motoservice.dto.request.MotorcycleUpdateRequestDto;
 import com.developer.motoservice.dto.response.MotorcycleResponseDto;
 import com.developer.motoservice.model.Motorcycle;
 import com.developer.motoservice.model.Owner;
@@ -24,11 +25,18 @@ public class MotorcycleMapper {
         return responseDto;
     }
 
-    public Motorcycle toModel(MotorcycleRequestDto requestDto) {
+    public Motorcycle toModel(MotorcycleCreateRequestDto requestDto) {
+        return getGeneralFieldsMapped(requestDto);
+    }
+
+    public Motorcycle toModel(MotorcycleUpdateRequestDto requestDto) {
+        Motorcycle motorcycle = getGeneralFieldsMapped(requestDto);
+        motorcycle.setId(requestDto.getId());
+        return motorcycle;
+    }
+
+    private Motorcycle getGeneralFieldsMapped(MotorcycleCreateRequestDto requestDto) {
         Motorcycle motorcycle = new Motorcycle();
-        if (requestDto.getId() != null) {
-            motorcycle.setId(requestDto.getId());
-        }
         motorcycle.setBrand(requestDto.getBrand());
         motorcycle.setModel(requestDto.getModel());
         motorcycle.setProductionYear(requestDto.getProductionYear());

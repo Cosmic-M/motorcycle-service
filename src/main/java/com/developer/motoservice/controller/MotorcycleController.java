@@ -1,6 +1,7 @@
 package com.developer.motoservice.controller;
 
-import com.developer.motoservice.dto.request.MotorcycleRequestDto;
+import com.developer.motoservice.dto.request.MotorcycleCreateRequestDto;
+import com.developer.motoservice.dto.request.MotorcycleUpdateRequestDto;
 import com.developer.motoservice.dto.response.MotorcycleResponseDto;
 import com.developer.motoservice.service.MotorcycleService;
 import com.developer.motoservice.service.mapper.MotorcycleMapper;
@@ -17,14 +18,14 @@ public class MotorcycleController {
 
     @ApiOperation(value = "save new motorcycle into DB")
     @PostMapping("/create")
-    public MotorcycleResponseDto create(@RequestBody MotorcycleRequestDto requestDto) {
+    public MotorcycleResponseDto create(@RequestBody MotorcycleCreateRequestDto requestDto) {
         return motorcycleMapper
                 .toDto(motorcycleService.create(motorcycleMapper.toModel(requestDto)));
     }
 
     @ApiOperation("update motorcycle in DB")
     @PutMapping("/update")
-    public void update(@RequestBody MotorcycleRequestDto requestDto) {
+    public void update(@RequestBody MotorcycleUpdateRequestDto requestDto) {
         motorcycleService.update(motorcycleMapper.toModel(requestDto));
     }
 }

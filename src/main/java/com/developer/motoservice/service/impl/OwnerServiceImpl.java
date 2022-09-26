@@ -23,7 +23,10 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public void update(Owner owner) {
-        ownerRepository.save(owner);
+        Owner ownerFromDb = ownerRepository.findById(owner.getId()).orElseThrow(
+                () -> new RuntimeException("Cannot find owner by id=" + owner.getId()));
+        ownerFromDb.setPhoneNumber(owner.getPhoneNumber());
+        ownerRepository.save(ownerFromDb);
     }
 
     @Override

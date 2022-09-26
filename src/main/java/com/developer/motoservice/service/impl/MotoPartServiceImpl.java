@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MotoPartImpl implements MotoPartService {
+public class MotoPartServiceImpl implements MotoPartService {
     private final MotoPartRepository motoPartRepository;
 
     @Override

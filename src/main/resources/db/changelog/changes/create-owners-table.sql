@@ -2,6 +2,9 @@
 CREATE TABLE IF NOT EXISTS owners
 (
     id bigint NOT NULL,
+    first_name character varying(256) NOT NULL,
+    last_name character varying(256) NOT NULL,
+    phone_number character varying(256) NOT NULL,
     motorcycle_id bigint NOT NULL,
     order_id bigint NOT NULL,
     CONSTRAINT owner_pk PRIMARY KEY (id)

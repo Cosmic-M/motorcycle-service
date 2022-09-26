@@ -1,9 +1,7 @@
 package com.developer.motoservice.controller;
 
-import com.developer.motoservice.dto.request.MotoPartRequestDto;
 import com.developer.motoservice.dto.request.OrderRequestDto;
 import com.developer.motoservice.dto.response.OrderResponseDto;
-import com.developer.motoservice.model.MotoPart;
 import com.developer.motoservice.model.Order;
 import com.developer.motoservice.model.OrderStatus;
 import com.developer.motoservice.service.OrderService;

@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MotorcycleRequestDto {
-    private Long id;
+public class MotorcycleCreateRequestDto {
     private String brand;
     private String model;
     private Integer productionYear;

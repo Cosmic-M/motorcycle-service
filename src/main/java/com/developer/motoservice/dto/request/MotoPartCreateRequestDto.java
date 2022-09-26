@@ -7,8 +7,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class MotoPartRequestDto {
-    private Long id;
+public class MotoPartCreateRequestDto {
     private String title;
     private BigDecimal cost;
 }

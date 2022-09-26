@@ -1,6 +1,7 @@
 package com.developer.motoservice.controller;
 
-import com.developer.motoservice.dto.request.MotoPartRequestDto;
+import com.developer.motoservice.dto.request.MotoPartCreateRequestDto;
+import com.developer.motoservice.dto.request.MotoPartUpdateRequestDto;
 import com.developer.motoservice.dto.response.MotoPartResponseDto;
 import com.developer.motoservice.service.MotoPartService;
 import com.developer.motoservice.service.mapper.MotoPartMapper;
@@ -20,13 +21,13 @@ public class MotoPartController {
 
     @ApiOperation(value = "save new moto part into DB")
     @PostMapping("/create")
-    public MotoPartResponseDto create(@RequestBody MotoPartRequestDto requestDto) {
+    public MotoPartResponseDto create(@RequestBody MotoPartCreateRequestDto requestDto) {
         return motoPartMapper.toDto(motoPartService.create(motoPartMapper.toModel(requestDto)));
     }
 
     @ApiOperation(value = "fetching existent moto part into DB for updating")
     @PostMapping("/update")
-    public void update(@RequestBody MotoPartRequestDto requestDto) {
+    public void update(@RequestBody MotoPartUpdateRequestDto requestDto) {
         motoPartService.update(motoPartMapper.toModel(requestDto));
     }
 }
