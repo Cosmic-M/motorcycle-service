@@ -13,7 +13,9 @@ public class Favor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String description;
     @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
     @ManyToOne
     private Master master;

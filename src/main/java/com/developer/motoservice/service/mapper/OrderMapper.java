@@ -1,6 +1,7 @@
 package com.developer.motoservice.service.mapper;
 
-import com.developer.motoservice.dto.request.OrderRequestDto;
+import com.developer.motoservice.dto.request.OrderCreateRequestDto;
+import com.developer.motoservice.dto.request.OrderUpdateRequestDto;
 import com.developer.motoservice.dto.response.OrderResponseDto;
 import com.developer.motoservice.model.Favor;
 import com.developer.motoservice.model.MotoPart;
@@ -9,7 +10,7 @@ import com.developer.motoservice.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,8 +19,7 @@ public class OrderMapper {
     private final OwnerRepository ownerRepository;
     private final MasterRepository masterRepository;
     private final MotorcycleRepository motorcycleRepository;
-    private final FavorRepository motoServiceRepository;
-    private final MotoPartRepository motoPartRepository;
+    private final OrderRepository orderRepository;
 
     public OrderResponseDto toDto(Order order) {
         OrderResponseDto responseDto = new OrderResponseDto();
@@ -29,23 +29,35 @@ public class OrderMapper {
         responseDto.setMotorcycleId(order.getMotorcycle().getId());
         responseDto.setDescription(order.getDescription());
         responseDto.setOpenOrder(order.getOpenOrder());
-        responseDto.setFavorIdList(order.getFavors().stream()
-                .map(Favor::getId)
-                .collect(Collectors.toList()));
-        responseDto.setMotoPartIdList(order.getMotoParts().stream()
-                .map(MotoPart::getId)
-                .collect(Collectors.toList()));
         responseDto.setStatus(order.getStatus());
-        responseDto.setTotalAmount(order.getTotalAmount());
-        responseDto.setCompletionOrder(order.getCompletionOrder());
+        responseDto.setFavorIdList(order.getFavors() != null ? order.getFavors().stream()
+                .map(Favor::getId).collect(Collectors.toList()) : Collections.emptyList());
+        responseDto.setMotoPartIdList(order.getFavors() != null ? order.getMotoParts().stream()
+                .map(MotoPart::getId).collect(Collectors.toList()) : Collections.emptyList());
+        if (order.getTotalAmount() != null) {
+            responseDto.setTotalAmount(order.getTotalAmount());
+        }
+        if (order.getCompletionOrder() != null) {
+            responseDto.setCompletionOrder(order.getCompletionOrder());
+        }
         return responseDto;
     }
 
-    public Order toModel(OrderRequestDto requestDto) {
+    public Order toModel(OrderCreateRequestDto requestDto) {
+        return makeGeneralFieldsMapped(requestDto);
+    }
+
+    public Order toModel(OrderUpdateRequestDto requestDto) {
+        Order order = makeGeneralFieldsMapped(requestDto);
+        order.setId(requestDto.getId());
+        Order fromDb = orderRepository.findById(order.getId()).orElseThrow(
+                () -> new RuntimeException("Cannot find order by id=" + requestDto.getId()));
+        order.setStatus(fromDb.getStatus());
+        return order;
+    }
+
+    private Order makeGeneralFieldsMapped(OrderCreateRequestDto requestDto) {
         Order order = new Order();
-        if (requestDto.getId() != null) {
-            order.setId(requestDto.getId());
-        }
         order.setOwner(ownerRepository.findById(requestDto.getOwnerId()).orElseThrow(
                 () -> new RuntimeException("Cannot find owner by id=" + requestDto.getOwnerId())));
         order.setMaster(masterRepository.findById(requestDto.getMasterId()).orElseThrow(
@@ -54,19 +66,6 @@ public class OrderMapper {
                 .orElseThrow(() -> new RuntimeException(
                         "Cannot find motorcycle by id=" + requestDto.getMotorcycleId())));
         order.setDescription(requestDto.getDescription());
-        order.setOpenOrder(requestDto.getOpenOrder());
-        List<Favor> favors = requestDto.getFavorIdList().stream()
-                .map(id -> motoServiceRepository.findById(id).orElseThrow(
-                        () -> new RuntimeException("Cannot find moto service by id=" + id)))
-                .toList();
-        order.setFavors(favors);
-        List<MotoPart> motoParts = requestDto.getMotoPartIdList().stream().map(
-                id -> motoPartRepository.findById(id).orElseThrow(
-                        () -> new RuntimeException("Cannot find moto part by id=" + id))).toList();
-        order.setMotoParts(motoParts);
-        order.setStatus(requestDto.getStatus());
-        order.setTotalAmount(requestDto.getTotalAmount());
-        order.setCompletionOrder(requestDto.getCompletionOrder());
         return order;
     }
 }

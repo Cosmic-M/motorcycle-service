@@ -2,26 +2,20 @@ package com.developer.motoservice.service.mapper;
 
 import com.developer.motoservice.dto.request.MasterCreateRequestDto;
 import com.developer.motoservice.dto.request.MasterUpdateRequestDto;
-import com.developer.motoservice.dto.response.MasterResponseDto;
+import com.developer.motoservice.dto.response.MasterCreateResponseDto;
 import com.developer.motoservice.model.Master;
-import com.developer.motoservice.model.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class MasterMapper {
 
-    public MasterResponseDto toDto(Master master) {
-        MasterResponseDto masterResponseDto = new MasterResponseDto();
+    public MasterCreateResponseDto toDto(Master master) {
+        MasterCreateResponseDto masterResponseDto = new MasterCreateResponseDto();
         masterResponseDto.setId(master.getId());
         masterResponseDto.setFirstName(master.getFirstName());
         masterResponseDto.setLastName(master.getLastName());
-        masterResponseDto.setOrderIdList(master.getOrders().stream()
-                .map(Order::getId)
-                .collect(Collectors.toList()));
         return masterResponseDto;
     }
 

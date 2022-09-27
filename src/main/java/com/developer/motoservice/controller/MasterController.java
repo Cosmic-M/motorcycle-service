@@ -2,7 +2,7 @@ package com.developer.motoservice.controller;
 
 import com.developer.motoservice.dto.request.MasterCreateRequestDto;
 import com.developer.motoservice.dto.request.MasterUpdateRequestDto;
-import com.developer.motoservice.dto.response.MasterResponseDto;
+import com.developer.motoservice.dto.response.MasterCreateResponseDto;
 import com.developer.motoservice.dto.response.OrderResponseDto;
 import com.developer.motoservice.dto.response.SalaryResponseDto;
 import com.developer.motoservice.model.Order;
@@ -29,7 +29,7 @@ public class MasterController {
 
     @ApiOperation(value = "save new master into DB")
     @PostMapping("/create")
-    public MasterResponseDto create(@RequestBody MasterCreateRequestDto masterRequestDto) {
+    public MasterCreateResponseDto create(@RequestBody MasterCreateRequestDto masterRequestDto) {
         return masterMapper.toDto(masterService.create(masterMapper.toModel(masterRequestDto)));
     }
 

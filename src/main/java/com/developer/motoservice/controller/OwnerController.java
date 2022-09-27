@@ -3,7 +3,7 @@ package com.developer.motoservice.controller;
 import com.developer.motoservice.dto.request.OwnerCreateRequestDto;
 import com.developer.motoservice.dto.request.OwnerUpdateRequestDto;
 import com.developer.motoservice.dto.response.OrderResponseDto;
-import com.developer.motoservice.dto.response.OwnerResponseDto;
+import com.developer.motoservice.dto.response.OwnerCreateResponseDto;
 import com.developer.motoservice.model.Order;
 import com.developer.motoservice.service.OwnerService;
 import com.developer.motoservice.service.mapper.OrderMapper;
@@ -25,7 +25,7 @@ public class OwnerController {
 
     @ApiOperation(value = "create new owner into DB")
     @PostMapping("/create")
-    public OwnerResponseDto create(@RequestBody OwnerCreateRequestDto requestDto) {
+    public OwnerCreateResponseDto create(@RequestBody OwnerCreateRequestDto requestDto) {
         return ownerMapper.toDto(ownerService.save(ownerMapper.toModel(requestDto)));
     }
 

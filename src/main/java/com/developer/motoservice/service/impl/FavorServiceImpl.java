@@ -1,6 +1,7 @@
 package com.developer.motoservice.service.impl;
 
 import com.developer.motoservice.model.Favor;
+import com.developer.motoservice.model.Order;
 import com.developer.motoservice.model.PayStatus;
 import com.developer.motoservice.repository.FavorRepository;
 import com.developer.motoservice.service.FavorService;
@@ -20,7 +21,10 @@ public class FavorServiceImpl implements FavorService {
 
     @Override
     public void update(Favor favor) {
-        PayStatus statusFromDb = favorRepository.getPayStatusById(favor.getId());
+        Favor fromDb = favorRepository.findById(favor.getId()).orElseThrow(
+                () -> new RuntimeException("Cannot find favor from DB by id=" + favor.getId()));
+
+        PayStatus statusFromDb = fromDb.getStatus();
         favor.setStatus(statusFromDb);
         favorRepository.save(favor);
     }

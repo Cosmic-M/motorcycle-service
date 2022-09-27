@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Setter
 public class FavorResponseDto {
     private Long id;
+    private String description;
     private Long orderId;
     private Long masterId;
     private BigDecimal totalCost;

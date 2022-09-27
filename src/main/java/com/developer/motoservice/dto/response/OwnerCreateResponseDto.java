@@ -7,9 +7,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class MasterResponseDto {
+public class OwnerCreateResponseDto {
     private Long id;
     private String firstName;
     private String lastName;
-    private List<Long> orderIdList;
+    private String phoneNumber;
 }

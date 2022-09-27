@@ -4,8 +4,7 @@ import com.developer.motoservice.model.Favor;
 import com.developer.motoservice.model.MotoPart;
 import com.developer.motoservice.model.Order;
 import com.developer.motoservice.model.OrderStatus;
-import com.developer.motoservice.repository.MotoPartRepository;
-import com.developer.motoservice.repository.OrderRepository;
+import com.developer.motoservice.repository.*;
 import com.developer.motoservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,15 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MotoPartRepository motoPartRepository;
+    private final MasterRepository masterRepository;
+    private final OwnerRepository ownerRepository;
+    private final MotorcycleRepository motorcycleRepository;
+    private final FavorRepository favorRepository;
 
     @Override
     public Order create(Order order) {
         order.setStatus(OrderStatus.RECEIVED);
+        order.setOpenOrder(ZonedDateTime.now().toLocalDateTime());
         return orderRepository.save(order);
     }
 
@@ -32,6 +36,10 @@ public class OrderServiceImpl implements OrderService {
                 () -> new RuntimeException("Cannot find order by id=" + orderId));
         MotoPart motoPart = motoPartRepository.findById(motoPartId).orElseThrow(
                 () -> new RuntimeException("Cannot find moto part by id=" + motoPartId));
+        List<Long> favorIdList = order.getFavors().stream()
+                .map(Favor::getId).toList();
+        List<Favor> favors = favorRepository.findAllById(favorIdList);
+        order.setFavors(favors);
         List<MotoPart> motoPartList = order.getMotoParts();
         motoPartList.add(motoPart);
         order.setMotoParts(motoPartList);
@@ -47,21 +55,29 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void update(Order order) {
-        order.setTotalAmount(getTotalAmount(order));
+        Order fromDb = orderRepository.findById(order.getId()).orElseThrow(
+                () -> new RuntimeException("cannot find order by id=" + order.getId()));
+        fromDb.setDescription(order.getDescription());
+        fromDb.setMaster(masterRepository.findById(order.getId()).orElseThrow(
+                () -> new RuntimeException("Can`t find master by id=" + order.getMaster().getId())));
+        fromDb.setOwner(ownerRepository.findById(order.getOwner().getId()).orElseThrow(
+                () -> new RuntimeException("Cannot find owner by id=" + order.getOwner().getId())));
+        fromDb.setMotorcycle(motorcycleRepository.findById(order.getMotorcycle().getId()).orElseThrow(
+                () -> new RuntimeException("Cannot find motorcycle by id=" + order.getMotorcycle().getId())));
         orderRepository.save(order);
     }
 
     @Override
     public void changeStatus(Long orderId, String status) {
-        Order order = orderRepository.findById(orderId).orElseThrow(
+        Order fromDb = orderRepository.findById(orderId).orElseThrow(
                 () -> new RuntimeException("Cannot find order by id=" + orderId));
         OrderStatus orderStatus = OrderStatus.valueOf(status);
         if (orderStatus == OrderStatus.CONFIRMED_FAIL
                 || orderStatus == OrderStatus.CONFIRMED_SUCCESS) {
-            order.setCompletionOrder(ZonedDateTime.now().toLocalDateTime());
+            fromDb.setCompletionOrder(ZonedDateTime.now().toLocalDateTime());
         }
-        order.setStatus(OrderStatus.valueOf(status));
-        update(order);
+        fromDb.setStatus(OrderStatus.valueOf(status));
+        update(fromDb);
     }
 
     private int getDiscountPercents(Long ownerId) {

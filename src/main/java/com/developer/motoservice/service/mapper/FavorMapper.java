@@ -37,6 +37,7 @@ public class FavorMapper {
 
     private Favor makeGeneralFieldsMapped(FavorCreateRequestDto requestDto) {
         Favor favor = new Favor();
+        favor.setDescription(requestDto.getDescription());
         favor.setOrder(orderRepository.findById(requestDto.getOrderId()).orElseThrow(
                 () -> new RuntimeException("Cannot find order by id=" + requestDto.getOrderId())));
         favor.setMaster(masterRepository.findById(requestDto.getMasterId()).orElseThrow(

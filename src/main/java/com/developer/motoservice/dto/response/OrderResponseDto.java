@@ -3,7 +3,6 @@ package com.developer.motoservice.dto.response;
 import com.developer.motoservice.model.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

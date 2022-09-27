@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS orders
     favor_id bigint NOT NULL,
     moto_part_id bigint NOT NULL,
     status character varying(256) NOT NULL,
-    total_amount decimal(14, 5) NOT NULL,
-    completion_order timestamp NOT NULL,
+    total_amount decimal(14, 5),
+    completion_order timestamp,
     CONSTRAINT order_pk PRIMARY KEY (id)
     CONSTRAINT `order_motorcycle_fk`
     FOREIGN KEY (`motorcycle_id`)

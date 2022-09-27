@@ -27,7 +27,7 @@ public class Order {
     private String description;
     @Column(name = "open_order")
     private LocalDateTime openOrder;
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private List<Favor> favors;
     @OneToMany
     private List<MotoPart> motoParts;

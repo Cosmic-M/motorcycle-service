@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS favors
 (
     id bigint NOT NULL,
+    description character varying(256) NOT NULL,
     order_id bigint NOT NULL,
     master_id bigint NOT NULL,
     cost decimal(14, 5) NOT NULL,
