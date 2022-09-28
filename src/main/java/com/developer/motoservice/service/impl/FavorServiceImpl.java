@@ -1,7 +1,6 @@
 package com.developer.motoservice.service.impl;
 
 import com.developer.motoservice.model.Favor;
-import com.developer.motoservice.model.Order;
 import com.developer.motoservice.model.PayStatus;
 import com.developer.motoservice.repository.FavorRepository;
 import com.developer.motoservice.service.FavorService;

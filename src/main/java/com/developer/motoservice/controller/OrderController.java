@@ -52,6 +52,7 @@ public class OrderController {
                 () -> new RuntimeException("Cannot find order by id=" + orderId));
         fromDb.setTotalAmount(orderService.getTotalAmount(fromDb));
         fromDb.setStatus(OrderStatus.IN_PROCESS);
+        orderService.update(fromDb);
         return orderMapper.toDto(fromDb);
     }
 }

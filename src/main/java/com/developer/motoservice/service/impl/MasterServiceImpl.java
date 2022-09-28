@@ -7,7 +7,7 @@ import com.developer.motoservice.repository.OrderRepository;
 import com.developer.motoservice.service.MasterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,10 +37,13 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
+    @Transactional
     public BigDecimal getSalary(Long masterId) {
         List<Order> orders = orderRepository
                 .getAllByMasterIdAndStatus(masterId, OrderStatus.CONFIRMED_SUCCESS);
-        List<Favor> favors = favorRepository.getAllByOrderInAndStatusIs(orders, PayStatus.NOT_PAID);
+        Master master = masterRepository.findById(masterId).orElseThrow(
+                () -> new RuntimeException("Cannot find master by id=" + masterId));
+        List<Favor> favors = favorRepository.getAllByOrderInAndMasterAndStatusIs(orders, master, PayStatus.NOT_PAID);
         BigDecimal favorsMoney = favors.stream().map(Favor::getCost).reduce(BigDecimal::add).orElseThrow(
                 () -> new RuntimeException("Cannot find any relevant favor"
                 + " for master with id=" + masterId

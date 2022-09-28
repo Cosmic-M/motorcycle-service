@@ -1,13 +1,13 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/changes/create-masters-table.sql
+      file: db/changelog/changes/create/masters-table.sql
   - include:
-      file: db/changelog/changes/create-moto_parts-table.sql
+      file: db/changelog/changes/create/moto_parts-table.sql
   - include:
-      file: db/changelog/changes/create-favors-table.sql
+      file: db/changelog/changes/create/favors-table.sql
   - include:
-      file: db/changelog/changes/create-motorcycles-table.sql
+      file: db/changelog/changes/create/motorcycles-table.sql
   - include:
-      file: db/changelog/changes/create-orders-table.sql
+      file: db/changelog/changes/create/orders-table.sql
   - include:
-      file: db/changelog/changes/create-owners-table.sql
+      file: db/changelog/changes/create/owners-table.sql

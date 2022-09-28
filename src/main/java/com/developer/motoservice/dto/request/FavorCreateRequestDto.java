@@ -1,5 +1,6 @@
 package com.developer.motoservice.dto.request;
 
+import com.developer.motoservice.model.FavorType;
 import lombok.Getter;
 import lombok.Setter;
 import java.math.BigDecimal;
@@ -11,4 +12,5 @@ public class FavorCreateRequestDto {
     private Long orderId;
     private Long masterId;
     private BigDecimal cost;
+    private FavorType type;
 }

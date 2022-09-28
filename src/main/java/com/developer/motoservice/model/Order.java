@@ -29,7 +29,7 @@ public class Order {
     private LocalDateTime openOrder;
     @OneToMany(mappedBy = "order")
     private List<Favor> favors;
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private List<MotoPart> motoParts;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

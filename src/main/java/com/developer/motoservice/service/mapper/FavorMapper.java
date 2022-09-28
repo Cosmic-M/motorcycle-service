@@ -18,10 +18,12 @@ public class FavorMapper {
     public FavorResponseDto toDto(Favor favor) {
         FavorResponseDto responseDto = new FavorResponseDto();
         responseDto.setId(favor.getId());
+        responseDto.setDescription(favor.getDescription());
         responseDto.setOrderId(favor.getMaster().getId());
         responseDto.setMasterId(favor.getOrder().getId());
         responseDto.setStatus(favor.getStatus());
         responseDto.setTotalCost(favor.getCost());
+        responseDto.setType(favor.getType());
         return responseDto;
     }
 
@@ -43,6 +45,7 @@ public class FavorMapper {
         favor.setMaster(masterRepository.findById(requestDto.getMasterId()).orElseThrow(
                 () -> new RuntimeException("Cannot find master by id=" + requestDto.getMasterId())));
         favor.setCost(requestDto.getCost());
+        favor.setType(requestDto.getType());
         return favor;
     }
 }

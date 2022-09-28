@@ -22,4 +22,6 @@ public class Favor {
     private BigDecimal cost;
     @Enumerated(EnumType.STRING)
     private PayStatus status;
+    @Enumerated(EnumType.STRING)
+    private FavorType type;
 }
