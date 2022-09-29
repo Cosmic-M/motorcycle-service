@@ -15,9 +15,6 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MotoPartRepository motoPartRepository;
-    private final MasterRepository masterRepository;
-    private final OwnerRepository ownerRepository;
-    private final MotorcycleRepository motorcycleRepository;
     private final FavorRepository favorRepository;
 
     @Override
@@ -55,12 +52,6 @@ public class OrderServiceImpl implements OrderService {
         Order fromDb = orderRepository.findById(order.getId()).orElseThrow(
                 () -> new RuntimeException("cannot find order by id=" + order.getId()));
         fromDb.setDescription(order.getDescription());
-//        fromDb.setMaster(masterRepository.findById(order.getId()).orElseThrow(
-//                () -> new RuntimeException("Can`t find master by id=" + order.getMaster().getId())));
-//        fromDb.setOwner(ownerRepository.findById(order.getOwner().getId()).orElseThrow(
-//                () -> new RuntimeException("Cannot find owner by id=" + order.getOwner().getId())));
-//        fromDb.setMotorcycle(motorcycleRepository.findById(order.getMotorcycle().getId()).orElseThrow(
-//                () -> new RuntimeException("Cannot find motorcycle by id=" + order.getMotorcycle().getId())));
         fromDb.setMaster(order.getMaster());
         fromDb.setOwner(order.getOwner());
         fromDb.setMotorcycle(order.getMotorcycle());

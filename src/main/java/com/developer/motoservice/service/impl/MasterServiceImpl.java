@@ -1,5 +1,6 @@
 package com.developer.motoservice.service.impl;
 
+import com.developer.motoservice.dto.response.FavorReport;
 import com.developer.motoservice.model.*;
 import com.developer.motoservice.repository.FavorRepository;
 import com.developer.motoservice.repository.MasterRepository;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,19 +39,20 @@ public class MasterServiceImpl implements MasterService {
     @Override
     @Transactional
     public BigDecimal getSalary(Long masterId) {
-        List<Order> orders = orderRepository
-                .getAllByMasterIdAndStatus(masterId, OrderStatus.CONFIRMED_SUCCESS);
-        Master master = masterRepository.findById(masterId).orElseThrow(
-                () -> new RuntimeException("Cannot find master by id=" + masterId));
-        List<Favor> favors = favorRepository.getAllByOrderInAndMasterAndStatusIs(orders, master, PayStatus.NOT_PAID);
-        BigDecimal favorsMoney = favors.stream().map(Favor::getCost).reduce(BigDecimal::add).orElseThrow(
-                () -> new RuntimeException("Cannot find any relevant favor"
-                + " for master with id=" + masterId
-                + ": it seems to be master smoked bamboo last month"));
-        favors = favors.stream().peek(favor -> favor.setStatus(PayStatus.PAID)).collect(Collectors.toList());
+        List<FavorReport> report = favorRepository.getAllForSalaryCalculate(masterId);
+        BigDecimal favorMoney = report.stream()
+                .map(FavorReport::getFavorCost)
+                .reduce(BigDecimal::add)
+                .orElseThrow(() -> new RuntimeException("Cannot find any relevant favor"
+                                + " for master with id=" + masterId
+                                + ": it seems to be master smoked bamboo last month"));
+        List<Long> favorIdList = report.stream()
+                .map(FavorReport::getFavorId)
+                .toList();
+        List<Favor> favors = favorRepository.findAllById(favorIdList).stream()
+                .peek(favor -> favor.setStatus(PayStatus.PAID))
+                .toList();
         favorRepository.saveAll(favors);
-        orders = orders.stream().peek(order -> order.setStatus(OrderStatus.PAID)).collect(Collectors.toList());
-        orderRepository.saveAll(orders);
-        return favorsMoney.multiply(BigDecimal.valueOf(0.4));
+        return favorMoney.multiply(BigDecimal.valueOf(0.4));
     }
 }

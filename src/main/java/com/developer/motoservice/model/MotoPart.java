@@ -16,7 +16,4 @@ public class MotoPart {
     private Long id;
     private String title;
     private BigDecimal cost;
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
 }
