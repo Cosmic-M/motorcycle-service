@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS orders
     motorcycle_id bigint NOT NULL,
     description character varying(256) NOT NULL,
     open_order timestamp NOT NULL,
-    favor_id bigint NOT NULL,
     moto_part_id bigint NOT NULL,
     status character varying(256) NOT NULL,
     total_amount decimal(14, 5),

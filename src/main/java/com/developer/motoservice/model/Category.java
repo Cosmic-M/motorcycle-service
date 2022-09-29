@@ -1,6 +1,6 @@
 package com.developer.motoservice.model;
 
-public enum FavorType {
+public enum Category {
     DIAGNOSTIC,
     REPAIR
 }

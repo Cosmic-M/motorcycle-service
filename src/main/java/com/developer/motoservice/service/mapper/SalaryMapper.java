@@ -1,9 +1,8 @@
 package com.developer.motoservice.service.mapper;
 
 import com.developer.motoservice.dto.response.SalaryResponseDto;
-import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SalaryMapper {

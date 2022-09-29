@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS favors
     master_id bigint NOT NULL,
     cost decimal(14, 5) NOT NULL,
     status character varying(256) NOT NULL,
-    vafor_type character varying(256) NOT NULL,
+    category character varying(256) NOT NULL,
     CONSTRAINT vafor_pk PRIMARY KEY (id)
     CONSTRAINT `favor_order_fk`
     FOREIGN KEY (`order_id`)

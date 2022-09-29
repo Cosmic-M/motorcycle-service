@@ -1,16 +1,19 @@
 package com.developer.motoservice.service.impl;
 
 import com.developer.motoservice.dto.response.FavorReport;
-import com.developer.motoservice.model.*;
+import com.developer.motoservice.model.Favor;
+import com.developer.motoservice.model.Master;
+import com.developer.motoservice.model.Order;
+import com.developer.motoservice.model.PayStatus;
 import com.developer.motoservice.repository.FavorRepository;
 import com.developer.motoservice.repository.MasterRepository;
 import com.developer.motoservice.repository.OrderRepository;
 import com.developer.motoservice.service.MasterService;
+import java.math.BigDecimal;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

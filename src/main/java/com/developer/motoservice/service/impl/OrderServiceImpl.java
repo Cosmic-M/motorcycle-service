@@ -1,14 +1,20 @@
 package com.developer.motoservice.service.impl;
 
-import com.developer.motoservice.model.*;
-import com.developer.motoservice.repository.*;
+import com.developer.motoservice.model.Category;
+import com.developer.motoservice.model.Favor;
+import com.developer.motoservice.model.MotoPart;
+import com.developer.motoservice.model.Order;
+import com.developer.motoservice.model.OrderStatus;
+import com.developer.motoservice.repository.FavorRepository;
+import com.developer.motoservice.repository.MotoPartRepository;
+import com.developer.motoservice.repository.OrderRepository;
 import com.developer.motoservice.service.OrderService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -92,14 +98,13 @@ public class OrderServiceImpl implements OrderService {
                 .map(cost -> cost.multiply(partsDiscount))
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.valueOf(0));
-        List<Favor> favors = order.getFavors().stream().toList();
+        List<Favor> favors = favorRepository.getAllByOrder(order);
         BigDecimal favorsTotalAmount;
-        if (favors.size() == 1 && favors.get(0).getType().equals(FavorType.DIAGNOSTIC)) {
+        if (favors.size() == 1 && favors.get(0).getCategory().equals(Category.DIAGNOSTIC)) {
             favorsTotalAmount = favors.get(0).getCost().multiply(favorsDiscount);
-        }
-        else {
+        } else {
             Optional<Favor> diagnosticFavor = favors.stream()
-                    .filter(favor -> favor.getType().equals(FavorType.DIAGNOSTIC))
+                    .filter(favor -> favor.getCategory().equals(Category.DIAGNOSTIC))
                     .findFirst();
             diagnosticFavor.ifPresent(favor -> favor.setCost(BigDecimal.valueOf(1)));
             favorsTotalAmount = favors.stream()

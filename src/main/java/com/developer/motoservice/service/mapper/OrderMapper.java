@@ -6,12 +6,14 @@ import com.developer.motoservice.dto.response.OrderResponseDto;
 import com.developer.motoservice.model.Favor;
 import com.developer.motoservice.model.MotoPart;
 import com.developer.motoservice.model.Order;
-import com.developer.motoservice.repository.*;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
+import com.developer.motoservice.repository.MasterRepository;
+import com.developer.motoservice.repository.MotorcycleRepository;
+import com.developer.motoservice.repository.OrderRepository;
+import com.developer.motoservice.repository.OwnerRepository;
 import java.util.Collections;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

@@ -5,10 +5,9 @@ import com.developer.motoservice.model.Owner;
 import com.developer.motoservice.repository.OrderRepository;
 import com.developer.motoservice.repository.OwnerRepository;
 import com.developer.motoservice.service.OwnerService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

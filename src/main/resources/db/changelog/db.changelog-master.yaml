@@ -11,3 +11,18 @@ databaseChangeLog:
       file: db/changelog/changes/create/orders-table.sql
   - include:
       file: db/changelog/changes/create/owners-table.sql
+
+#  - include:
+#      file: db/changelog/changes/add/add-masters.sql
+#  - include:
+#      file: db/changelog/changes/add/add-owners.sql
+#  - include:
+#      file: db/changelog/changes/add/add-motorcycle.sql
+#  - include:
+#      file: db/changelog/changes/add/add-order.sql
+#  - include:
+#      file: db/changelog/changes/add/add-favor.sql
+#  - include:
+#      file: db/changelog/changes/add/add-moto_part.sql
+#  - include:
+#      file: db/changelog/changes/add/add-moto_part-to-order.sql

@@ -23,7 +23,7 @@ public class FavorMapper {
         responseDto.setMasterId(favor.getOrder().getId());
         responseDto.setStatus(favor.getStatus());
         responseDto.setTotalCost(favor.getCost());
-        responseDto.setType(favor.getType());
+        responseDto.setCategory(favor.getCategory());
         return responseDto;
     }
 
@@ -41,11 +41,13 @@ public class FavorMapper {
         Favor favor = new Favor();
         favor.setDescription(requestDto.getDescription());
         favor.setOrder(orderRepository.findById(requestDto.getOrderId()).orElseThrow(
-                () -> new RuntimeException("Cannot find order by id=" + requestDto.getOrderId())));
+                () -> new RuntimeException("Cannot find order by id="
+                        + requestDto.getOrderId())));
         favor.setMaster(masterRepository.findById(requestDto.getMasterId()).orElseThrow(
-                () -> new RuntimeException("Cannot find master by id=" + requestDto.getMasterId())));
+                () -> new RuntimeException("Cannot find master by id="
+                        + requestDto.getMasterId())));
         favor.setCost(requestDto.getCost());
-        favor.setType(requestDto.getType());
+        favor.setCategory(requestDto.getCategory());
         return favor;
     }
 }

@@ -1,7 +1,6 @@
 package com.developer.motoservice.service;
 
 import com.developer.motoservice.model.Order;
-
 import java.math.BigDecimal;
 
 public interface OrderService {
