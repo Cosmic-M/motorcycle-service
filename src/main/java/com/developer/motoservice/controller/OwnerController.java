@@ -40,7 +40,8 @@ public class OwnerController {
         ownerService.update(ownerMapper.toModel(requestDto));
     }
 
-    @GetMapping("/{id}")
+    @ApiOperation(value = "get list of orders by ownerId")
+    @GetMapping("/order-list/{id}")
     public List<OrderResponseDto> getOrders(@PathVariable Long id) {
         List<Order> orders = ownerService.getOrders(id);
         return orders.stream().map(orderMapper::toDto).collect(Collectors.toList());
