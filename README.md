@@ -3,6 +3,7 @@
 <h3>To launch app:</h3>
 - pull this project <br>
 - create schema motorcycle_service in postgreSQL DB <br>
+- configure file applicationi.property and make a connection
 - open terminal and run 'mvn clean package' command <br>
 - IMPORTANT! follow db/changelog/db.changelog-master.yaml and uncomment scripts which responsible for filling tables with data <br>
 - run app <br>
@@ -14,6 +15,9 @@
 - now you can invoke GET: /masters/salary/{masterId} (there were two masters working on this order, so id is 1 and 2 respectively) <br>
 - wou will obtain their salaries for all orders that has status 'PAID'. Needless to say if its orders includes <br>
   relevant favors, I mean favors with their id and status 'NOT_PAID'. All discounts (according origin task were implemented) <br>
+
+<h3>DataBase structure:</h3>
+<img alt="schema.png" height="500" src="schema.png" width="850"/>
 
 <h3>Project description:</h3>
 MotorcycleService will be in handy for accounting, saving data concerning clients or their discount, or etcetera... <br>
